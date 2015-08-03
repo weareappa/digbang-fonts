@@ -1,4 +1,5 @@
 <?php namespace Digbang\FontAwesome;
+
 use Illuminate\Html\HtmlBuilder;
 
 /**
@@ -6,17 +7,27 @@ use Illuminate\Html\HtmlBuilder;
  */
 class FontAwesome
 {
-	protected $tag = 'i';
-	protected $htmlBuilder;
+	/**
+	 * @type string
+	 */
+	private $tag = 'i';
 
-	function __construct(HtmlBuilder $htmlBuilder)
+	/**
+	 * @type HtmlBuilder
+	 */
+	private $htmlBuilder;
+
+	/**
+	 * @param HtmlBuilder $htmlBuilder
+	 */
+	public function __construct(HtmlBuilder $htmlBuilder)
 	{
 		$this->htmlBuilder = $htmlBuilder;
 	}
 
-
 	/**
 	 * Builds a FontAwesome icon HTML.
+	 *
 	 * @param string $name The icon name, as indicated in the FA documentation.
 	 * @param array $options Extra class/es to add to the icon
 	 * @return string
@@ -25,17 +36,19 @@ class FontAwesome
 	{
 		$options = $this->parseOptions($options);
 
-		$classes = $this->getClasses($name, array_pull($options, 'class'));
+		$options['class'] = $this->getClasses($name, array_pull($options, 'class'));
 
 		return
-			$this->openTag(
-				' class="' . $classes . '"' .
-				$this->htmlBuilder->attributes($options)
-			) .
-			$this->closeTag();
+			$this->openTag($this->htmlBuilder->attributes($options)) . $this->closeTag();
 	}
 
-	protected function parse($name)
+	/**
+	 * Parses the given name, to check if it starts with "fa-" already.
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	private function parse($name)
 	{
 		if (substr($name, 0, 3) == 'fa-')
 		{
@@ -45,22 +58,47 @@ class FontAwesome
 		return "fa-$name";
 	}
 
-	protected function openTag($content = '')
+	/**
+	 * Opens the configured tag.
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	private function openTag($content = '')
 	{
 		return '<' . $this->tag . $content . '>';
 	}
 
-	protected function closeTag()
+	/**
+	 * Closes the configured tag.
+	 *
+	 * @return string
+	 */
+	private function closeTag()
 	{
 		return '</' . $this->tag . '>';
 	}
 
-	protected function getClasses($name, $extra = '')
+	/**
+	 * Returns all needed font-awesome classes, and any extra ones required.
+	 *
+	 * @param string $name
+	 * @param string $extra
+	 *
+	 * @return string
+	 */
+	private function getClasses($name, $extra = '')
 	{
 		return 'fa ' . $this->parse($name) . ($extra ? " $extra" : '');
 	}
 
-	protected function parseOptions($options)
+	/**
+	 * Parse options and returns them as an array.
+	 *
+	 * @param string|array $options
+	 * @return array
+	 */
+	private function parseOptions($options)
 	{
 		if (!is_array($options))
 		{

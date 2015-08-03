@@ -1,4 +1,5 @@
 <?php namespace Digbang\FontAwesome;
+
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -7,11 +8,6 @@ use Illuminate\Support\ServiceProvider;
  */
 class FontAwesomeServiceProvider extends ServiceProvider
 {
-	public function boot()
-	{
-		$this->package('digbang/font-awesome');
-	}
-
 	/**
 	 * Register the service provider.
 	 *
@@ -19,6 +15,6 @@ class FontAwesomeServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$this->app->singleton('font-awesome', 'Digbang\FontAwesome\FontAwesome');
+		$this->app->singleton(FontAwesome::class);
 	}
 }

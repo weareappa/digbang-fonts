@@ -6,9 +6,9 @@ use Prophecy\Argument;
 
 class FontAwesomeSpec extends ObjectBehavior
 {
-	function let(HtmlBuilder $htmlBuilder)
+	function let()
 	{
-		$this->beConstructedWith($htmlBuilder);
+		$this->beConstructedWith(new HtmlBuilder());
 	}
 
     function it_is_initializable()
