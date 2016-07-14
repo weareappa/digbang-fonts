@@ -1,14 +1,19 @@
-<?php namespace spec\Digbang\FontAwesome;
+<?php
+namespace spec\Digbang\FontAwesome;
 
-use Illuminate\Html\HtmlBuilder;
+use Collective\Html\HtmlBuilder;
+use Illuminate\Contracts\View\Factory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @mixin \Digbang\FontAwesome\FontAwesome
+ */
 class FontAwesomeSpec extends ObjectBehavior
 {
-	function let()
+	function let(Factory $view)
 	{
-		$this->beConstructedWith(new HtmlBuilder());
+		$this->beConstructedWith(new HtmlBuilder(null, $view->getWrappedObject()));
 	}
 
     function it_is_initializable()
