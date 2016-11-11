@@ -5,21 +5,47 @@ Digbang/FontAwesome
 
 Helper class to create FontAwesome icons with a predefined markup.
 
+Installation
+------------
+
+Download through composer:
+
+```
+composer require digbang/font-awesome
+```
+
+Add the service provider and facade to your `config/app.php`:
+
+```php
+'providers' => [
+    // ...
+    Digbang\FontAwesome\FontAwesomeServiceProvider::class,
+    
+],
+
+'aliases' => [
+    // ...
+    'FontAwesome' => Digbang\FontAwesome\Facade::class,
+],
+```
+
 Usage
 -----
 
-### Basic usage
+### Through the facade
 
 ```php
-FontAwesome::icon('icon', 'extra-class')
+FontAwesome::icon('icon', 'extra-class') // <i class="fa fa-icon extra-class"></i>
 // or...
-FontAwesome::icon('icon', ['class' => 'extra-class'])
+FontAwesome::icon('icon', ['class' => 'extra-class']) // <i class="fa fa-icon extra-class"></i>
 ```
 
-Would result in...
+### Through the helper function
 
-```html
-<i class="fa fa-icon extra-class"></i>
+```php
+fa('icon', 'extra-class') // <i class="fa fa-icon extra-class"></i>
+// or...
+fa('icon', ['class' => 'extra-class']) // <i class="fa fa-icon extra-class"></i>
 ```
 
 ### HTML Attributes
@@ -28,13 +54,7 @@ You can also add any other attributes to the html.
 Doing...
 
 ```php
-FontAwesome::icon('times', ['title' => 'Delete this!'])
-```
-
-would result in...
-
-```html
-<i class="fa fa-times" title="Delete this!"></i>
+fa('times', ['title' => 'Delete this!']) // <i class="fa fa-times" title="Delete this!"></i>
 ```
 
 ### Changing the tag
@@ -44,34 +64,16 @@ Doing...
 
 ```php
 FontAwesome::setTag('span');
-FontAwesome::icon('edit');
+
+fa('edit'); // <span class="fa fa-edit"></span>
 ```
 
-would result in...
+### Standalone usage
 
-```html
-<span class="fa fa-edit"></span>
-```
-
-Laravel
--------
-
-Add the service provider and facade to your `app/config/app.php` file:
+Non-Laravel projects can still use this, but the Facade and helper function won't be available.
 
 ```php
-'providers' => array(
-	...
-	'Digbang\FontAwesome\FontAwesomeServiceProvider',
-	...
-);
-```
-
-And add the class alias, so you can call it like `\FontAwesome::icon`
-
-```php
-'aliases' => array(
-	...
-	'FontAwesome' => 'Digbang\FontAwesome\Facade',
-	...
-);
+$fa = new Digbang\FontAwesome\FontAwesome;
+$fa->setTag('span');
+$fa->icon('times', 'text-danger'); // <span class="fa fa-times text-danger"></span>
 ```

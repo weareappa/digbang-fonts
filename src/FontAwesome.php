@@ -1,31 +1,16 @@
 <?php
 namespace Digbang\FontAwesome;
 
-use Collective\Html\HtmlBuilder;
+use Illuminate\Support\Arr;
+use Illuminate\Support\HtmlString;
 
-/**
- * Class FontAwesome
- */
 class FontAwesome
 {
     /**
      * @type string
      */
     private $tag = 'i';
-    
-    /**
-     * @type HtmlBuilder
-     */
-    private $htmlBuilder;
-    
-    /**
-     * @param HtmlBuilder $htmlBuilder
-     */
-    public function __construct(HtmlBuilder $htmlBuilder)
-    {
-        $this->htmlBuilder = $htmlBuilder;
-    }
-    
+
     /**
      * Builds a FontAwesome icon HTML.
      *
@@ -37,12 +22,14 @@ class FontAwesome
     public function icon($name, $options = [])
     {
         $options = $this->parseOptions($options);
-        
-        $options['class'] = $this->getClasses($name, array_pull($options, 'class'));
-        
-        return $this->openTag($this->htmlBuilder->attributes($options)) . $this->closeTag();
+
+        $options['class'] = $this->getClasses($name, Arr::pull($options, 'class'));
+
+        return new HtmlString(
+            $this->openTag($this->attributes($options)) . $this->closeTag()
+        );
     }
-    
+
     /**
      * Parses the given name, to check if it starts with "fa-" already.
      *
@@ -52,14 +39,13 @@ class FontAwesome
      */
     private function parse($name)
     {
-        if (substr($name, 0, 3) == 'fa-')
-        {
+        if (strpos($name, 'fa-') === 0) {
             return $name;
         }
-        
+
         return "fa-$name";
     }
-    
+
     /**
      * Opens the configured tag.
      *
@@ -71,7 +57,7 @@ class FontAwesome
     {
         return '<' . $this->tag . $content . '>';
     }
-    
+
     /**
      * Closes the configured tag.
      *
@@ -81,7 +67,7 @@ class FontAwesome
     {
         return '</' . $this->tag . '>';
     }
-    
+
     /**
      * Returns all needed font-awesome classes, and any extra ones required.
      *
@@ -94,7 +80,7 @@ class FontAwesome
     {
         return 'fa ' . $this->parse($name) . ($extra ? " $extra" : '');
     }
-    
+
     /**
      * Parse options and returns them as an array.
      *
@@ -107,10 +93,10 @@ class FontAwesome
         if (!is_array($options)) {
             $options = ['class' => (string) $options];
         }
-        
+
         return $options;
     }
-    
+
     /**
      * @param string $tag
      */
@@ -118,12 +104,56 @@ class FontAwesome
     {
         $this->tag = $tag;
     }
-    
+
     /**
      * @return string
      */
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * Build an HTML attribute string from an array.
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    private function attributes($attributes)
+    {
+        $html = [];
+
+        foreach ((array) $attributes as $key => $value) {
+            $element = $this->attributeElement($key, $value);
+
+            if (! is_null($element)) {
+                $html[] = $element;
+            }
+        }
+
+        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
+    }
+
+    /**
+     * Build a single attribute element.
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return string
+     */
+    private function attributeElement($key, $value)
+    {
+        // For numeric keys we will assume that the key and the value are the same
+        // as this will convert HTML attributes such as "required" to a correct
+        // form like required="required" instead of using incorrect numerics.
+        if (is_numeric($key)) {
+            $key = $value;
+        }
+
+        if (! is_null($value)) {
+            return $key . '="' . e($value) . '"';
+        }
     }
 }

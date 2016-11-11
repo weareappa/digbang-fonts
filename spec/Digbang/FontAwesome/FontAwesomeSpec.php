@@ -1,27 +1,21 @@
 <?php
 namespace spec\Digbang\FontAwesome;
 
-use Collective\Html\HtmlBuilder;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * @mixin \Digbang\FontAwesome\FontAwesome
  */
 class FontAwesomeSpec extends ObjectBehavior
 {
-	function let(Factory $view)
-	{
-		$this->beConstructedWith(new HtmlBuilder(null, $view->getWrappedObject()));
-	}
-
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Digbang\FontAwesome\FontAwesome');
     }
 
-	function it_should_give_me_an_icon()
+	public function it_should_give_me_an_icon()
 	{
 		$this->icon('times')->shouldMatch('/class="[^"]*fa fa-times[^"]*"/');
 		$this->icon('fa-times')->shouldMatch('/class="[^"]*fa fa-times[^"]*"/');
@@ -29,11 +23,21 @@ class FontAwesomeSpec extends ObjectBehavior
 		$this->icon('fa-times', 'fa-bigger')->shouldMatch('/class="[^"]*fa fa-times[^"]* fa-bigger[^"]*"/');
 	}
 
-	function it_should_let_me_change_the_tag()
+	public function it_should_let_me_change_the_tag()
 	{
 		$this->setTag('span');
 
 		$this->icon('times')->shouldMatch('/^<span/');
+	}
+
+    public function it_should_return_an_htmlable_object()
+    {
+        $this->icon('foo')->shouldBeAnInstanceOf(Htmlable::class);
+	}
+
+    public function it_should_return_an_html_string_object()
+    {
+        $this->icon('foo')->shouldBeAnInstanceOf(HtmlString::class);
 	}
 
 	public function getMatchers()
