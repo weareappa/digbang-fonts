@@ -9,7 +9,7 @@ Installation
 Download through composer:
 
 ```
-composer require digbang/font-awesome
+composer require digbang/fonts
 ```
 
 Add the service provider and facade to your `config/app.php`:
@@ -72,8 +72,8 @@ fa('times', 'text-hide')->withContent("Remove element");
 
 // FontAwesome stacks
 fa('stack', 'fa-lg')->withContent(
-	fa('circle', 'fa-stack-2x') .
-	fa('flag', 'fa-stack-1x fa-inverse')
+    fa('circle', 'fa-stack-2x') .
+    fa('flag', 'fa-stack-1x fa-inverse')
 );
 ```
 
@@ -96,7 +96,7 @@ The `Digbang\Fonts\FontManager` can be extended with macros:
 
 ```php
 Fonts::macro('digbang', function () {
-	return $this->create('db');
+    return $this->create('db');
 });
 
 Fonts::digbang()->icon('foo'); // <i class="db db-foo"></i>
