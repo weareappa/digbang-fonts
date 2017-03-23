@@ -41,8 +41,11 @@ Usage
 ```php
 // The `icon` function will use the configured icon prefix (defaults to "fa")
 Fonts::icon('icon', 'extra-class') // <i class="fa fa-icon extra-class"></i>
+```
 
-// Package provides "fa" and "mat" as helper method for Font Awesome and Material Design icons.
+Package provides "fa" and "mat" as helper method for [Font Awesome](http://fontawesome.io/) and [Material Design](http://zavoloklom.github.io/material-design-iconic-font/icons.html) icons.
+
+```php
 Fonts::fa()->icon('icon', ['class' => 'extra-class']) // <i class="fa fa-icon extra-class"></i>
 Fonts::mat()->icon('icon', ['class' => 'extra-class']) // <i class="zmdi zmdi-icon extra-class"></i>
 ```
