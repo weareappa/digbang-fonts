@@ -1,6 +1,7 @@
 {
     "name": "digbang/fonts",
     "description": "Helpers to build icons for multiple (and custom) sources.",
+    "license": "MIT",
     "authors": [{
         "name": "Guido Contreras Woda",
         "email": "gcontreras@digbang.com"
