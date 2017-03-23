@@ -2,7 +2,7 @@
 namespace Digbang\FontAwesome;
 
 /**
- * @method static string icon(string $name, array $options = [])
+ * @method static string icon(string $name, string $cssPrefix, array $options = [])
  * @method static setTag(string $tag)
  * @method static string getTag()
  */

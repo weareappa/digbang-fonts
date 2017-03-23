@@ -15,15 +15,16 @@ class FontAwesome
      * Builds a FontAwesome icon HTML.
      *
      * @param string $name    The icon name, as indicated in the FA documentation.
+     * @param string  $cssPrefix Prefix for CSS icon classes
      * @param array  $options Extra class/es to add to the icon
      *
      * @return string
      */
-    public function icon($name, $options = [])
+    public function icon($name, $cssPrefix, $options = [])
     {
         $options = $this->parseOptions($options);
 
-        $options['class'] = $this->getClasses($name, Arr::pull($options, 'class'));
+        $options['class'] = $this->getClasses($name, $cssPrefix, Arr::pull($options, 'class'));
 
         return new HtmlString(
             $this->openTag($this->attributes($options)) . $this->closeTag()
@@ -34,16 +35,17 @@ class FontAwesome
      * Parses the given name, to check if it starts with "fa-" already.
      *
      * @param string $name
+     * @param string $cssPrefix
      *
      * @return string
      */
-    private function parse($name)
+    private function parse($name, $cssPrefix)
     {
-        if (strpos($name, 'fa-') === 0) {
+        if (strpos($name, "{$cssPrefix}-") === 0) {
             return $name;
         }
 
-        return "fa-$name";
+        return "{$cssPrefix}-{$name}";
     }
 
     /**
@@ -72,13 +74,14 @@ class FontAwesome
      * Returns all needed font-awesome classes, and any extra ones required.
      *
      * @param string $name
+     * @param string $cssPrefix
      * @param string $extra
      *
      * @return string
      */
-    private function getClasses($name, $extra = '')
+    private function getClasses($name, $cssPrefix, $extra = '')
     {
-        return 'fa ' . $this->parse($name) . ($extra ? " $extra" : '');
+        return "{$cssPrefix} " . $this->parse($name, $cssPrefix) . ($extra ? " $extra" : '');
     }
 
     /**
