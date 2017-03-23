@@ -1,28 +1,41 @@
 <?php
-use Digbang\FontAwesome\Facade;
+use Digbang\Fonts\Facade;
 
-if (!function_exists('fa')) {
+if (!function_exists('icon')) {
     /**
-     * @param string $icon
+     * @param string $name
      * @param array  $options
      *
      * @return string
      */
-    function fa($icon, array $options = [])
+    function icon($name, array $options = [])
     {
-        return Facade::icon($icon, 'fa', $options);
+        return Facade::icon($name, $options);
+    }
+}
+
+if (!function_exists('fa')) {
+    /**
+     * @param string $name
+     * @param array  $options
+     *
+     * @return string
+     */
+    function fa($name, array $options = [])
+    {
+        return Facade::fa()->icon($name, $options);
     }
 }
 
 if (!function_exists('mat')) {
     /**
-     * @param string $icon
+     * @param string $name
      * @param array  $options
      *
      * @return string
      */
-    function mat($icon, array $options = [])
+    function mat($name, array $options = [])
     {
-        return Facade::icon($icon, 'zmdi', $options);
+        return Facade::mat()->icon($name, $options);
     }
 }

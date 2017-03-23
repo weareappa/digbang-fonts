@@ -1,15 +1,16 @@
 {
-    "name": "digbang/font-awesome",
-    "description": "Helper class to build FontAwesome icons",
-    "authors": [
-        {
-            "name": "Guido Contreras Woda",
-            "email": "guiwoda@gmail.com"
-        }
-    ],
+    "name": "digbang/fonts",
+    "description": "Helpers to build icons for multiple (and custom) sources.",
+    "authors": [{
+        "name": "Guido Contreras Woda",
+        "email": "gcontreras@digbang.com"
+    }, {
+        "name": "Alejandro Riedel",
+        "email": "ariedel@digbang.com"
+    }],
 	"autoload": {
 		"psr-4": {
-			"Digbang\\FontAwesome\\": "src/"
+			"Digbang\\Fonts\\": "src/"
 		},
         "files": ["src/helpers.php"]
 	},
