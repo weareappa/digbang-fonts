@@ -60,7 +60,7 @@ class FontManager
      */
     public function create($prefix)
     {
-        return $this->factories[$prefix] ?: $this->factories[$prefix] = new Factory($prefix, $this->defaultTag);
+        return $this->factories[$prefix] ?? $this->factories[$prefix] = new Factory($prefix, $this->defaultTag);
     }
 
     /**
