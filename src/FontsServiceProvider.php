@@ -21,7 +21,7 @@ class FontsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->publishes([$this->configPath() => config_path('fonts')], 'config');
+        $this->publishes([$this->configPath() => config_path('fonts.php')], 'config');
     }
 
     /**
